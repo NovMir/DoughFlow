@@ -1,13 +1,13 @@
 import createError from 'http-errors';
-import express from 'express';
+import express, { NextFunction } from 'express';
 import path from 'path';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+let indexRouter = require('./routes/index');
+let usersRouter = require('./routes/users');
 
-var app = express();
+const app = express();
 export default app;
 
 // view engine setup
@@ -29,9 +29,7 @@ app.use(function(req, res, next) {
 });
 
 // error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
+app.use(function(err:createError.HttpError, req:express.Request, res:express.Response, next:NextFunction){gi
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
   // render the error page

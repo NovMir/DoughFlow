@@ -8,9 +8,9 @@ const express_1 = __importDefault(require("express"));
 const path_1 = __importDefault(require("path"));
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const morgan_1 = __importDefault(require("morgan"));
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-var app = (0, express_1.default)();
+let indexRouter = require('./routes/index');
+let usersRouter = require('./routes/users');
+const app = (0, express_1.default)();
 exports.default = app;
 app.set('views', path_1.default.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -25,7 +25,7 @@ app.use(function (req, res, next) {
     next((0, http_errors_1.default)(404));
 });
 app.use(function (err, req, res, next) {
-    res.locals.message = err.message;
+    gi;
     res.locals.error = req.app.get('env') === 'development' ? err : {};
     res.status(err.status || 500);
     res.render('error');
