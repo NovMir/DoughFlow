@@ -1,11 +1,50 @@
+
 <!DOCTYPE html>
-<html>
+
+
   <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/@fortawesome/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" href="/Content/app.css">
   </head>
-  <body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">DoughFlow</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" href="/dashboard"><i class="fas fa-tachometer-alt fa-lg"></i> Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/add-recipes"><i class="fas fa-utensils fa-lg"></i> Add Recipes</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/inventory"><i class="fas fa-boxes fa-lg"></i> Inventory</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/stock-list"><i class="fas fa-list fa-lg"></i> Stock List</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/analytics"><i class="fas fa-chart-bar fa-lg"></i> Analytics</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+  
     <h1><%= title %></h1>
     <p>Welcome to <%= title %></p>
+    <script src="/jquery/dist/jquery.min.js"></script>
+    <script src="/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="/Scripts/app.js"></script>  
   </body>
 </html>

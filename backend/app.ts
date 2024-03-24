@@ -4,8 +4,8 @@ import path from 'path';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 
-let indexRouter = require('./routes/index');
-let usersRouter = require('./routes/users');
+import indexRouter from './routes/index';
+import usersRouter from './routes/users';
 
 const app = express();
 export default app;
@@ -18,8 +18,8 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
-
+app.use(express.static(path.join(__dirname, 'Client')));
+app.use(express.static(path.join(__dirname, "node_modules")));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
@@ -29,12 +29,17 @@ app.use(function(req, res, next) {
 });
 
 // error handler
-app.use(function(err:createError.HttpError, req:express.Request, res:express.Response, next:NextFunction){gi
+app.use(function(err:createError.HttpError, req:express.Request, res:express.Response, next:NextFunction){
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  res.render('error',{
+    message: err.message,
+    error: err
+  });
 });
+
+
 
 
