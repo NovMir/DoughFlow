@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Recipe Detail</title>
+</head>
+<body>
+    <h1><%= recipe.name %></h1>
+    <h3>Ingredients:</h3>
+    <ul>
+        <% recipe.ingredients.split(',').forEach(ingredient => { %>
+            <li><%= ingredient.trim() %></li>
+        <% }) %>
+    </ul>
+    <h3>Preparation Steps:</h3>
+    <p><%= recipe.steps %></p>
+
+    <a href="/recipes">Back to recipes list</a>
+</body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bakery App Recipe Form</title>
+    <style>
+        form {
+            display: flex;
+            flex-direction: column;
+            width: 300px;
+            margin: auto;
+        }
+        label, input, textarea {
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <form action="/recipes" method="POST">
+        <label for="name">Recipe Name:</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="ingredients">Ingredients:</label>
+        <textarea id="ingredients" name="ingredients" required></textarea>
+
+        <label for="steps">Preparation Steps:</label>
+        <textarea id="steps" name="steps" required></textarea>
+
+        <button type="submit">Submit Recipe</button>
+
+        <input type="button" onclick="window.location.href = 'recipes-list';" value="View Recipes">
+    </form>
+</body>
+</html>

@@ -11,6 +11,7 @@ const http_1 = __importDefault(require("http"));
 let port = normalizePort(process.env.PORT || '5000');
 app_1.default.set('port', port);
 let server = http_1.default.createServer(app_1.default);
+
 server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
@@ -24,6 +25,7 @@ function normalizePort(val) {
     }
     return false;
 }
+
 function onError(error) {
     if (error.syscall !== 'listen') {
         throw error;
