@@ -1,36 +1,40 @@
 const express = require('express');
-
 const router = express.Router();
+const Recipe = require('../models/Recipe');
+const Ingredient = require('../models/Ingredient');
 
-let recipesDatabase = [
-    { id: 1, name: 'Chocolate Cake', ingredients: 'Flour, Sugar, Cocoa Powder', steps: 'Mix, Bake, Eat' }
-];
-
-// Route to display the recipes list
-router.get('/recipes', (req, res) => {
-    res.render('recipes-list', { recipes: recipesDatabase });
+// GET all recipes
+router.get('/', async (req, res) => {
+    try {
+        const recipes = await Recipe.find().populate('ingredients');
+        res.render('recipes/index', { recipes });
+    } catch (error) {
+        res.status(500).send(error);
+    }
 });
 
-// Route to display the recipe form for adding new recipes
-router.get('/recipes/new', (req, res) => {
-    res.render('recipe-form');
+// GET the form to create a new recipe
+router.get('/new', async (req, res) => {
+    try {
+        const ingredients = await Ingredient.find();
+        res.render('recipes/new', { ingredients });
+    } catch (error) {
+        res.status(500).send(error);
+    }
 });
 
-// Route to handle the recipe form submission
-router.post('/recipes', (req, res) => {
-    const { name, ingredients, steps } = req.body;
-    const newRecipe = { id: recipesDatabase.length + 1, name, ingredients, steps };
-    recipesDatabase.push(newRecipe);
-    res.redirect('/recipes');
-});
-
-// Route to show a specific recipe
-router.get('/recipes/:id', (req, res) => {
-    const recipe = recipesDatabase.find(r => r.id.toString() === req.params.id);
-    if (recipe) {
-        res.render('recipe-detail', { recipe });
-    } else {
-        res.status(404).send('Recipe not found');
+// POST a new recipe
+router.post('/', async (req, res) => {
+    const { title, ingredientIds } = req.body;
+    const recipe = new Recipe({
+        title,
+        ingredients: ingredientIds
+    });
+    try {
+        await recipe.save();
+        res.redirect('/recipes');
+    } catch (error) {
+        res.status(500).send(error);
     }
 });
 

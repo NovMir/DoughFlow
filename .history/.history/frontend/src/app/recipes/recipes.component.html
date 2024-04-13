@@ -1,0 +1,10 @@
+<form (submit)="addRecipe()">
+    <input type="text" [(ngModel)]="recipe.title" name="title" placeholder="Title">
+    <!-- Additional fields for ingredients -->
+    <button type="submit">Add Recipe</button>
+  </form>
+  <div *ngFor="let recipe of recipes">
+    <h3>{{ recipe.title }}</h3>
+    <!-- List ingredients -->
+  </div>
+  

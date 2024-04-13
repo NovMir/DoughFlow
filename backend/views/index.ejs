@@ -1,50 +1,36 @@
-
 <!DOCTYPE html>
-
-
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title><%= title %></title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="/bootstrap/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/@fortawesome/fontawesome-free/css/all.min.css">
-    <link rel="stylesheet" href="/Content/app.css">
-  </head>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="#">DoughFlow</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link" href="/dashboard"><i class="fas fa-tachometer-alt fa-lg"></i> Dashboard</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/recipes"><i class="fas fa-utensils fa-lg"></i> Add Recipes</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/inventory"><i class="fas fa-boxes fa-lg"></i> Inventory</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/stock-list"><i class="fas fa-list fa-lg"></i> Stock List</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/analytics"><i class="fas fa-chart-bar fa-lg"></i> Analytics</a>
-                </li>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bakery Application</title>
+    <link rel="stylesheet" href="/css/styles.css"> <!-- Assuming you have some CSS for styling -->
+</head>
+<body>
+    <header>
+        <h1>Welcome to Dough Flow Bakery!</h1>
+        <nav>
+            <ul>
+                <li><a href="/recipes">Recipes</a></li>
+                <li><a href="/ingredients">Ingredients</a></li>
+                <li><a href="/cost">Cost Calculator</a></li>
+                <li><a href="/users/login">Login</a></li>
+                <li><a href="/users/register">Register</a></li>
             </ul>
-        </div>
-    </div>
-</nav>
-
-  
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-    <script src="/jquery/dist/jquery.min.js"></script>
-    <script src="/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="/Scripts/app.js"></script>  
-  </body>
+        </nav>
+    </header>
+    <main>
+        <section>
+            <h2>Featured Recipes</h2>
+            <!-- You could list some featured recipes here -->
+        </section>
+        <section>
+            <h2>About Us</h2>
+            <p>Welcome to Dough Flow Bakery, your go-to solution for managing bakery recipes, costs, and ingredients. Whether you're a home baker or a small bakery shop, our app helps you streamline your baking process.</p>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 Dough Flow Bakery. All rights reserved.</p>
+    </footer>
+</body>
 </html>

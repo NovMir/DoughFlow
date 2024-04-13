@@ -1,69 +1,65 @@
-"use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-const http_errors_1 = __importDefault(require("http-errors"));
-const express_1 = __importDefault(require("express"));
-const path_1 = __importDefault(require("path"));
-const cookie_parser_1 = __importDefault(require("cookie-parser"));
-const morgan_1 = __importDefault(require("morgan"));
-const index_1 = __importDefault(require("./routes/index"));
-const users_1 = __importDefault(require("./routes/users"));
-const recipes_1= __importDefault(require("./routes/recipes"));
-const app = (0, express_1.default)();
-exports.default = app;
-app.set('views', path_1.default.join(__dirname, 'views'));
+require('dotenv').config();
+const mongoose = require('mongoose');
+const express = require('express');
+const bodyParser = require('body-parser');
+const IngredientRouter = require('./routes/ingredients');
+const RecipesRouter = require('./routes/recipes');
+const app = express();
+const path = require('path');
+const session = require('express-session');
+const passport = require('passport');
+const flash = require('connect-flash');
+require('./config/passport.js')(passport); 
+const authRoutes = require('./routes/auth');
+
+app.use(express.static('public'));
+app.use(express.static(path.join(__dirname, 'public')));
+
+app.use(session({
+  secret: 'your_secret_key',  
+  resave: false,            
+  saveUninitialized: false,   
+  cookie: { secure: 'auto' }  
+}));
+
+app.use(flash());
+
+app.use((req, res, next) => {
+    res.locals.messages = req.flash();
+    next();
+});
+
+mongoose.connect('mongodb+srv://battle32:ICgHZSdFUYdbyerU@doughflow.sfu1fld.mongodb.net/?retryWrites=true&w=majority&appName=DoughFlow', { useNewUrlParser: true, useUnifiedTopology: true });
+
+const db = mongoose.connection;
+
+db.on('error', console.error.bind(console, 'connection error:'));
+
+db.once('open', function() {
+  console.log("We're connected!");
+});
+
 app.set('view engine', 'ejs');
-app.use((0, morgan_1.default)('dev'));
-app.use(express_1.default.json());
-app.use(express_1.default.urlencoded({ extended: false }));
-app.use((0, cookie_parser_1.default)());
-app.use(express_1.default.static(path_1.default.join(__dirname, 'Client')));
-app.use(express_1.default.static(path_1.default.join(__dirname, "node_modules")));
-app.use('/', index_1.default);
-app.use('/users', users_1.default);
-app.use('/recipes', recipes_1.default);
 
-function saveRecipe(name, ingredients, steps) {
-    // Logic to save the recipe in the database
-    console.log(`Saving recipe: ${name}`);
-    // Simulating database save 
-    return new Promise((resolve, reject) => {
-        // After database operations, resolve or reject the promise
-        setTimeout(() => resolve(`Recipe ${name} saved successfully`), 1000);
-    });
-}
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static('public'));
 
-app.post('/recipes', (req, res) => {
-    const { name, ingredients, steps } = req.body;
-
-    // Validate the form data 
-    if (!name || !ingredients || !steps) {
-        return res.status(400).send('All fields are required');
-    }
-
-    // Save the recipe data in the database
-    saveRecipe(name, ingredients, steps)
-        .then(result => {
-            console.log(result);
-            // Redirect to the home page or a confirmation page after successful save
-            res.redirect('/');
-        })
-        .catch(error => {
-            console.error('Error saving recipe:', error);
-            res.status(500).send('Error saving recipe');
-        });
+app.get('/', (req, res) => {
+    res.render('index');
 });
-app.use(function (req, res, next) {
-    next((0, http_errors_1.default)(404));
+
+app.use('/ingredients', IngredientRouter);
+app.use('/recipes', RecipesRouter);
+
+app.use(session({ secret: 'verysecret', resave: true, saveUninitialized: true }));
+app.use(passport.initialize());
+app.use(passport.session());
+
+//app.use('/login', authRoutes);
+//app.use('/register', authRoutes);
+app.use(express.urlencoded({ extended: false }));
+app.use('/users', authRoutes);
+
+app.listen(3000, () => {
+  console.log('Server is running on http://localhost:3000');
 });
-app.use(function (err, req, res, next) {
-    res.locals.error = req.app.get('env') === 'development' ? err : {};
-    res.status(err.status || 500);
-    res.render('error', {
-        message: err.message,
-        error: err
-    });
-});
-//# sourceMappingURL=app.js.map

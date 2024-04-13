@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ingredients List</title>
+</head>
+<body>
+    <h1>Ingredients</h1>
+    <ul>
+        <% ingredients.forEach(function(ingredient) { %>
+            <li><%= ingredient.name %> - Cost: <%= ingredient.cost %>, Quantity: <%= ingredient.quantity %></li>
+        <% }); %>
+    </ul>
+</body>
+</html>

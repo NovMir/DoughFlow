@@ -1,0 +1,7 @@
+<h1>Recipes</h1>
+<a href="/recipes/new">Add New Recipe</a>
+<ul>
+    <% recipes.forEach(recipe => { %>
+    <li><%= recipe.title %> - Ingredients: <%= recipe.ingredients.map(ing => ing.name).join(', ') %></li>
+    <% }); %>
+</ul>

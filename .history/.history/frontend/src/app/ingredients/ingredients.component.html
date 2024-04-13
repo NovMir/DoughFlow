@@ -1,0 +1,10 @@
+<form (submit)="addIngredient()">
+    <input type="text" [(ngModel)]="ingredient.name" name="name" placeholder="Name">
+    <input type="number" [(ngModel)]="ingredient.cost" name="cost" placeholder="Cost">
+    <input type="text" [(ngModel)]="ingredient.quantity" name="quantity" placeholder="Quantity">
+    <button type="submit">Add Ingredient</button>
+  </form>
+  <div *ngFor="let ingredient of ingredients">
+    <p>{{ ingredient.name }} - {{ ingredient.cost }} - {{ ingredient.quantity }}</p>
+  </div>
+  

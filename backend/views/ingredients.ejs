@@ -1,0 +1,12 @@
+<h1>Ingredients</h1>
+<form action="/ingredients" method="post">
+  <input type="text" name="name" placeholder="Name" required>
+  <input type="number" name="cost" placeholder="Cost" required>
+  <input type="text" name="quantity" placeholder="Quantity" required>
+  <button type="submit">Add Ingredient</button>
+</form>
+<ul>
+  <% ingredients.forEach(function(ingredient) { %>
+    <li><%= ingredient.name %> - <%= ingredient.cost %> - <%= ingredient.quantity %></li>
+  <% }) %>
+</ul>
