@@ -5,7 +5,7 @@ module.exports = function(passport) {
     passport.use(new LocalStrategy({
         usernameField: 'username',
         passwordField: 'password',
-        passReqToCallback: true // allows us to pass back the entire request to the callback
+        passReqToCallback: true 
     }, async (req, username, password, done) => {
         try {
             const user = await User.findOne({ username });

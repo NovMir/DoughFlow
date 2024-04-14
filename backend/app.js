@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const express = require('express');
 const bodyParser = require('body-parser');
 const IngredientRouter = require('./routes/ingredients');
+const Ingredient = require('./models/Ingredient');
 const RecipesRouter = require('./routes/recipes');
 const app = express();
 const path = require('path');
@@ -11,9 +12,10 @@ const passport = require('passport');
 const flash = require('connect-flash');
 require('./config/passport.js')(passport); 
 const authRoutes = require('./routes/auth');
-
+app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 app.use(express.static(path.join(__dirname, 'public')));
+app.set('views', path.join(__dirname, 'views'));
 
 app.use(session({
   secret: 'your_secret_key',  
@@ -51,12 +53,45 @@ app.get('/', (req, res) => {
 app.use('/ingredients', IngredientRouter);
 app.use('/recipes', RecipesRouter);
 
+app.get('/ingredients', async (req, res) => {
+  const ingredients = await Ingredient.find();
+  res.render('ingredients', { ingredients });
+});
+
+
+app.post('/ingredients', async (req, res) => {
+    try {
+        const { name, cost, quantity } = req.body;
+
+        if (!name || !cost || !quantity) {
+            res.status(400).send("All fields are required.");
+            return;
+        }
+
+        const costNumber = parseFloat(cost);
+        if (isNaN(costNumber)) {
+            res.status(400).send("Invalid cost. Please enter a valid number.");
+            return;
+        }
+
+        const newIngredient = new Ingredient({
+            name,
+            cost: costNumber,
+            quantity
+        });
+
+        await newIngredient.save();
+
+        res.redirect('/ingredients');
+    } catch (error) {
+        res.status(500).send("Failed to save ingredient. Error: " + error.message);
+    }
+});
+
 app.use(session({ secret: 'verysecret', resave: true, saveUninitialized: true }));
 app.use(passport.initialize());
 app.use(passport.session());
 
-//app.use('/login', authRoutes);
-//app.use('/register', authRoutes);
 app.use(express.urlencoded({ extended: false }));
 app.use('/users', authRoutes);
 
